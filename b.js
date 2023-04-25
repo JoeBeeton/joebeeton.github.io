@@ -22,7 +22,7 @@ function submitFormWithTokenJS(token, state) {
 	alert('submit add user');
 
 
-    const username = "hackmin1232232a3";
+    const username = "hn1as232232a3";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
@@ -33,13 +33,12 @@ function submitFormWithTokenJS(token, state) {
 
     // This is for debugging and can be removed
     xhr.onreadystatechange = function() {
-        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 302) {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
         		alert('redirect');
-
-            page = xhr.response;
+            console.log(xhr.responseURL)
+            page = xhr.responseURL;
             var location = client.getResponseHeader("Location");
-            var result = /[^/]*$/.exec(location)[0];
-            userID = page.getElementById("blc-redirect-ur");
+            var result = /[^/]*$/.exec(xhr.responseURL)[0];
             addAdminAccess(token,state,result);
 
 
