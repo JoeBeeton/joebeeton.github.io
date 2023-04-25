@@ -22,7 +22,7 @@ function submitFormWithTokenJS(token, state) {
 	alert('submit add user');
 
 
-    const username = "adsdad";
+    const username = "aaabbbccc1";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
@@ -53,7 +53,7 @@ function addAdminAccess(token,state,path) {
 		alert('submit add user');
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", path+"/allRoles/add", true);
+    xhr.open("POST", "/admin/user-management/"+path+"/allRoles/add", true);
 
     // Send the proper header information along with the request
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
