@@ -1,7 +1,7 @@
 window.addEventListener("load", function() { 
 
 	getTokenJS();
-	}
+	
 );
 
 function getTokenJS() {
