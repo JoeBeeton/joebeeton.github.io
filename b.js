@@ -37,7 +37,6 @@ function submitFormWithTokenJS(token, state) {
         		alert('redirect');
             console.log(xhr.responseURL)
             page = xhr.responseURL;
-            var location = client.getResponseHeader("Location");
             var result = /[^/]*$/.exec(xhr.responseURL)[0];
             addAdminAccess(token,state,result);
 
