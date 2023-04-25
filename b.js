@@ -12,7 +12,7 @@ function getTokenJS() {
             state = page.getElementsByName("stateVersionToken");
             console.log("The token is: " + csrf[0].value);
             console.log("The state is: " + state[0].value);
-            submitFormWithTokenJS(csrf.value[0], state.value[0]);
+            submitFormWithTokenJS(csrf[0].value, state[0].value);
         }
     };
     xhr.send(null);
