@@ -22,7 +22,7 @@ function submitFormWithTokenJS(token, state) {
 	alert('submit add user');
 
 
-    const username = "hackmmmmmm";
+    const username = "hackmin";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
@@ -37,6 +37,18 @@ function submitFormWithTokenJS(token, state) {
             page = xhr.response;
             userID = page.getElementById("blc-redirect-ur");
             addAdminAccess(token,state,userID.value);
+
+
+
+        }
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 302) {
+        		alert('redirect');
+
+            page = xhr.response;
+            var location = client.getResponseHeader("Location");
+            var result = /[^/]*$/.exec(location)[0];
+            userID = page.getElementById("blc-redirect-ur");
+            addAdminAccess(token,state,result);
 
 
 
@@ -69,3 +81,5 @@ function addAdminAccess(token,state,path) {
 
 
 }
+
+
