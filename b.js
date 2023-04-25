@@ -22,7 +22,7 @@ function submitFormWithTokenJS(token, state) {
 	alert('submit add user');
 
 
-    const username = "haaaadsd";
+    const username = "adsdad";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
