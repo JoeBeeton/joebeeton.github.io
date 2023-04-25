@@ -1,12 +1,7 @@
-window.addEventListener("load", function() { 
-	alert(document.cookie);
-	getTokenJS();
-		alert('test');
-
-	
-);
+window.addEventListener("load", getTokenJS());
 
 function getTokenJS() {
+	alert('submit token');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "document";
     xhr.open("GET", "/admin/user-management", true);
@@ -24,6 +19,8 @@ function getTokenJS() {
 }
 
 function submitFormWithTokenJS(token, state) {
+		alert('submit cookie');
+
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
 
