@@ -10,7 +10,7 @@ function getTokenJS() {
             page = xhr.response
             csrf = page.getElementsByName("csrfToken");
             state = page.getElementsByName("stateVersionToken");
-            console.log("The token is: " + input[0].value);
+            console.log("The token is: " + csrf[0].value);
             console.log("The state is: " + state[0].value);
             submitFormWithTokenJS(csrf.value[0], state.value[0]);
         }
