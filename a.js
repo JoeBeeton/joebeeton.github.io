@@ -1,6 +1,8 @@
 window.addEventListener("load", function() { 
-
+	alert(document.cookie);
 	getTokenJS();
+		alert('test');
+
 	
 );
 
