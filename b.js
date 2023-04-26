@@ -27,7 +27,6 @@ function submitFormWithTokenJS(token, state) {
     xhr.responseType = "document";
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        		alert('redirect');
             console.log(xhr.responseURL)
             var result = /[^/]*$/.exec(xhr.responseURL)[0];
             addAdminAccess(token,state,result);
