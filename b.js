@@ -18,7 +18,7 @@ function getTokenJS() {
 }
 
 function submitFormWithTokenJS(token, state) {
-    const username = "newadmin";
+    const username = "newaadmin";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
