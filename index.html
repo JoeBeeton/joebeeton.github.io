@@ -7,6 +7,24 @@
 </br>
 The repo https://github.com/JoeBeeton/simple-request-attacks contains sample codebases for the below vulnerabilities as well as a docker file to run the payloads locally.
 </br>
+<h3> MLFlow Data Exfiltration CVE-2023-43472 </h3></br>
+    This vulnerability utilises the mlflow ui. by default bound to localhost:5000 Up until and including 2.8.1 it was possible to generate a simple request that modifies the extensions repository location to be a S3 bucket that the attacker controls.
+	Once this is done any experiements run, would be uploaded to that S3 bucket. Leading to the attacker to have access to training data and ML Model saved in the python pickle format. Also as the model is saved in the pickle format and the attacker has control over it, it would be possible to create a python pickle serialization attack by modifying the model.pkl file.
+    </br>
+    This is done by first changing the name of the existing default extension. Then creating a new extension named Default and setting it's repository location to be a S3 bucket you control. The bucket would have to have global read and global write enabled to ensure that the mlflow instance is able to write to the bucket. </br>
+    <p><b>To Run : </b></br><i>
+	Install mlflow 2.8.1
+	pip install mlflow==2.8.1
+	</i>run mlflow ui
+	<i>mlflow ui
+	</br>
+  </i>
+    <a href="mlflow.html">Payload Link</a></p>
+	Once clicked, you should be able to go to localhost:5000 and see that the Default extensions repository link is now named "s3://bucket-attacker-owns-thats-globally-writable/0"
+	It sometimes takes a refresh of either the mlflow ui or the payload link to ensure the attack succeeds.
+	If you want to see data actually exfiltrated you would need to modify the S3 bucket to be one you control and have the access rights set corrrectly ( global read and write )
+	Or see the screenshots in the <a href=https://www.contrastsecurity.com/security-influencers/discovering-mlflow-framework-zero-day-vulnerability-machine-language-model-security-contrast-security">write up</a> 
+	</br>
 <h3> Quarkus RCE CVE-2022-4116 </h3></br>
     This vulnerability allows utilises the Dev UI which is available when the application is in Developer Mode. The Dev UI has the ability to modify application properties. Up until 2.14.2 it was possible to generate a simple request that modifies those properties and leverage that to execute arbitrary code in the target's JVM.
     </br>
