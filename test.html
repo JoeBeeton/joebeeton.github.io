@@ -20,7 +20,7 @@
         }
       });
       
-      updateXhr.open("POST", "http://localhost:5000/api/2.0/mlflow/experiments/create");
+      updateXhr.open("POST", "http://localhost:11434/api/2.0/mlflow/experiments/create");
       updateXhr.setRequestHeader("Content-Type", "text/plain");
       
       updateXhr.send(copyData);
