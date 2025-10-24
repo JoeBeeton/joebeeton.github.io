@@ -7,6 +7,23 @@
 </br>
 The repo https://github.com/JoeBeeton/simple-request-attacks contains sample codebases for the below vulnerabilities as well as a docker file to run the payloads locally.
 </br>
+<h3> Spring AI / Anthropic MCP Driveby attack</h3>
+    This vulnerability allows an attacker to interact with the Tool endpoint when using Spring-AI up to version 0.8.0. This is due to :
+    <ul>
+      <li>The session ID not being validated.</li>
+      <li>The content Type header not being validated</li>
+    </ul>
+    To run the exploit do the following.
+    <p><b>To Run : </b></br><i>
+        git clone https://github.com/JoeBeeton/spring-ai-mcp-driveby.git</br>
+        cd spring-ai-mcp-driveby</br>
+        mvn clean install</br>
+        mvn spring-boot:run</br>
+    </i>
+        More details about the vulnerability can be found in the readme of the repo above.
+    </br>
+        <br>
+        <a href="quarkus-liquibase-h2.html">Payload Link</a></p>
 <h3> MLFlow Data Exfiltration CVE-2023-43472 </h3></br>
     This vulnerability utilises the mlflow ui. by default bound to localhost:5000 Up until and including 2.8.1 it was possible to generate a simple request that modifies the extensions repository location to be a S3 bucket that the attacker controls.
 	Once this is done any experiements run, would be uploaded to that S3 bucket. Leading to the attacker to have access to training data and ML Model saved in the python pickle format. Also as the model is saved in the pickle format and the attacker has control over it, it would be possible to create a python pickle serialization attack by modifying the model.pkl file.
