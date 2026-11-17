@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLflow cross-site exposure — live PoC</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <h1>MLflow cross-site "simple request" exposure</h1>
+      <span class="mode mock" id="mode">…</span>
+    </div>
+    <div class="sub">A regression of CVE-2023-43472. This page is the <span class="evil">attacker site</span>:
+    everything below is triggered by a page you merely visit, against an MLflow server running on your own machine.</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="note" id="originNote"></div>
+
+  <p>Each demo fires a cross-site request at a local MLflow server and then shows the proof it leaves behind.
+  Cross-site responses are blind to this page, so the proof is read from a same-origin <code>/results/</code> oracle
+  (for the blind attacks) or directly from the server where the wildcard-CORS config makes it readable.</p>
+
+  <h2>Live attacks</h2>
+  <div id="demos"></div>
+
+  <h2>Other confirmed findings (not wired as live buttons here)</h2>
+  <ul class="explained">
+    <li><b>F3 — Assistant health GET side-effect (Low–Med).</b> A cross-site <code>GET …/assistant/providers/claude_code/health</code> launches the agent CLI, which starts the project's configured MCP servers — no prompt, no approval.</li>
+    <li><b>F8 — Prompt-optimization job cancel (Low).</b> Path-param-only POST, no body gate; cancels any job given a leaked job id.</li>
+    <li><b>F11 — Job-API scorer trust boundary (Med).</b> <code>submit_job</code> skips the scorer-payload validation the registration route applies, so a caller can redirect the judge's LLM calls (carrying the server credential) and impersonate any user to the gateway.</li>
+    <li><b>F12 — GenAI agent server (High).</b> Separate server: cross-site <code>text/plain</code> POST runs the developer's agent with attacker input; default bind <code>0.0.0.0</code>.</li>
+    <li><b>F13 / F14 — Standalone gateway & scoring server (Med / Low–Med).</b> No Host validation → reachable via DNS rebinding (not a simple-request drive-by).</li>
+    <li><b>F15 — basic-auth does not help.</b> Browsers attach cached HTTP Basic credentials to cross-site simple requests, so F1/F2 work against a logged-in user too.</li>
+  </ul>
+
+  <div class="note">Mock mode (default) uses an in-stack mock provider and a stub agent — no real calls, no secrets.
+  To verify for real on your own machine, put a key in <code>.env</code> (see <code>.env.example</code>); the banner turns red.</div>
+</div>
+
+<footer>
+  <div class="wrap">For coordinated disclosure to the MLflow maintainers. Harmless canary payloads only. Do not run against servers you don't own.</div>
+</footer>
+
+<script src="/assets/app.js?v=3"></script>
+<script>
+  renderDemos(document.getElementById("demos"));
+  renderModeBanner(document.getElementById("mode"));
+  document.getElementById("originNote").innerHTML =
+    "This page's origin is <code>" + location.origin + "</code>; the target servers are <code>http://127.0.0.1:8001</code> (default config) and <code>http://127.0.0.1:8002</code> (wildcard CORS). " +
+    "For a genuine cross-<i>site</i> origin, browse this page via <code>http://lvh.me:8080</code>.";
+</script>
+</body>
+</html>
